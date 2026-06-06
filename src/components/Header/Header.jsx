@@ -76,8 +76,12 @@ const Header = () => {
           </Link>
         </div>
 
+        {mobileMenuOpen && <div className="mobile-nav-overlay" onClick={() => setMobileMenuOpen(false)}></div>}
         <nav className={`header-nav ${mobileMenuOpen ? 'open' : ''}`}>
-          <ul>
+          <div className="header-nav-close" onClick={() => setMobileMenuOpen(false)}>
+            <X size={24} />
+          </div>
+          <ul className="nav-links">
             <li><Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link></li>
             <li><Link to="/shop" onClick={() => setMobileMenuOpen(false)}>All Products</Link></li>
             {categories.map((cat) => (
@@ -86,6 +90,20 @@ const Header = () => {
             <li><Link to="/#collections" className="nav-highlight" onClick={() => setMobileMenuOpen(false)}>Collections</Link></li>
             <li><Link to="/orders" onClick={() => setMobileMenuOpen(false)}>Order History</Link></li>
           </ul>
+
+          <div className="mobile-auth-section">
+            <h4>My Account</h4>
+            {user ? (
+              <div className="mobile-auth-buttons">
+                <button className="auth-btn black-btn" onClick={() => { navigate('/profile'); setMobileMenuOpen(false); }}>Profile</button>
+              </div>
+            ) : (
+              <div className="mobile-auth-buttons">
+                <button className="auth-btn black-btn" onClick={() => { navigate('/login'); setMobileMenuOpen(false); }}>Log in</button>
+                <button className="auth-btn outline-btn" onClick={() => { navigate('/signup'); setMobileMenuOpen(false); }}>Register</button>
+              </div>
+            )}
+          </div>
         </nav>
 
         <div className="header-actions">

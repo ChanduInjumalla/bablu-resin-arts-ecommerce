@@ -88,8 +88,8 @@
 
 .brand-logo-horizontal {
   display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  align-items: baseline;
+  gap: 0.5rem;
   text-decoration: none;
 }
 
@@ -116,7 +116,12 @@
   text-transform: uppercase;
   color: var(--brand-dark);
   transition: opacity var(--transition-normal);
-  padding-top: 8px;
+}
+
+.mobile-nav-overlay,
+.header-nav-close,
+.mobile-auth-section {
+  display: none;
 }
 
 .header-nav ul {
@@ -247,31 +252,99 @@
   .header-nav {
     position: fixed;
     top: 0;
-    left: -100%;
-    width: 100%;
+    left: -320px;
+    width: 320px;
+    max-width: 85%;
     height: 100vh;
-    background-color: var(--bg-primary);
+    background-color: white;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 2rem 1.5rem;
     transition: left var(--transition-elegant);
-    z-index: 999;
+    z-index: 1005;
+    overflow-y: auto;
   }
 
   .header-nav.open {
     left: 0;
   }
 
-  .header-nav ul {
+  .mobile-nav-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    z-index: 1004;
+  }
+
+  .header-nav-close {
+    display: block;
+    align-self: flex-start;
+    margin-bottom: 2rem;
+    cursor: pointer;
+  }
+
+  .header-nav ul.nav-links {
     flex-direction: column;
-    align-items: center;
-    gap: 2.5rem;
+    align-items: flex-start;
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom: auto; /* Pushes the auth section to the bottom if needed, or just let it sit */
   }
 
   .header-nav a {
     font-size: 1.1rem;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    color: #333;
+    text-transform: capitalize;
+  }
+
+  .mobile-auth-section {
+    display: flex;
+    margin-top: 3rem;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .mobile-auth-section h4 {
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    color: #333;
+  }
+
+  .mobile-auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  .auth-btn {
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .black-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+  }
+
+  .outline-btn {
+    background-color: transparent;
+    color: #000;
+    border: 1px solid #e0e0e0;
   }
 
   .mobile-toggle {
@@ -284,11 +357,11 @@
   }
 
   .logo-bablu {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .logo-resin {
-    font-size: 0.85rem;
-    letter-spacing: 3px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
   }
 }
