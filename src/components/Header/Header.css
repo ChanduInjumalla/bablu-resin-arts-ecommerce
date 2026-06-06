@@ -282,4 +282,13 @@
   .header-actions {
     gap: 1rem;
   }
+
+  .logo-bablu {
+    font-size: 1.8rem;
+  }
+
+  .logo-resin {
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+  }
 }

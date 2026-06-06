@@ -144,3 +144,13 @@
     margin: 0 1rem 1rem;
   }
 }
+
+@media (max-width: 768px) {
+  .hero-right {
+    display: none;
+  }
+  .hero {
+    min-height: auto;
+    padding-bottom: 2rem;
+  }
+}

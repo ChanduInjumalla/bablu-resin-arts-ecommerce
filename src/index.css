@@ -269,6 +269,7 @@ html {
 @media (max-width: 992px) {
   .layout-sidebar-container {
     flex-direction: column;
+    gap: 0;
   }
 }
 
@@ -293,5 +294,9 @@ html {
   .section-eyebrow::before,
   .section-eyebrow::after {
     width: 15px;
+  }
+  
+  .layout-sidebar-main .section {
+    padding-top: 1rem;
   }
 }
