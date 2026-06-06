@@ -73,7 +73,7 @@
   top: 1px;
 }
 
-.mobile-filter-toggle {
+.mobile-actions-bar {
   display: none;
 }
 
@@ -90,9 +90,18 @@
 }
 
 @media (max-width: 768px) {
-  .mobile-filter-toggle {
+  .mobile-actions-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .mobile-action-btn {
+    flex: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background-color: white;
     border: 1px solid var(--border-color);
@@ -100,11 +109,15 @@
     border-radius: 4px;
     font-family: var(--font-sans);
     font-weight: 500;
-    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--brand-dark);
     cursor: pointer;
-    width: 100%;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    transition: all var(--transition-fast);
+  }
+
+  .mobile-action-btn:hover {
+    background-color: #f9f9f9;
   }
 
   .filter-overlay {

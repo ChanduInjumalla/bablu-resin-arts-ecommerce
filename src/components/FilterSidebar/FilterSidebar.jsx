@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Filter, X } from 'lucide-react';
+import { Filter, X, ArrowUpDown } from 'lucide-react';
 import './FilterSidebar.css';
 
 const FilterSidebar = ({ onFilterChange, showCategoryFilter = false }) => {
@@ -31,14 +31,23 @@ const FilterSidebar = ({ onFilterChange, showCategoryFilter = false }) => {
 
   return (
     <>
-      {/* Mobile Toggle Button */}
-      <button 
-        className="mobile-filter-toggle"
-        onClick={() => setIsMobileOpen(true)}
-      >
-        <Filter size={18} />
-        <span>Filter Products</span>
-      </button>
+      {/* Mobile Actions Container */}
+      <div className="mobile-actions-bar">
+        <button 
+          className="mobile-action-btn"
+          onClick={() => setIsMobileOpen(true)}
+        >
+          <Filter size={16} strokeWidth={2} />
+          <span>Filters</span>
+        </button>
+        <button 
+          className="mobile-action-btn"
+          onClick={() => alert('Sorting feature coming soon!')}
+        >
+          <ArrowUpDown size={16} strokeWidth={2} />
+          <span>Sort</span>
+        </button>
+      </div>
 
       {/* Mobile Overlay */}
       {isMobileOpen && (
