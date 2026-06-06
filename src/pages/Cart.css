@@ -1,0 +1,14 @@
+/* Cart page specific styles */
+@media (max-width: 768px) {
+  .cart-layout {
+    flex-direction: column;
+  }
+  
+  .cart-summary {
+    position: static;
+  }
+  
+  .cart-item {
+    flex-direction: column;
+  }
+}
