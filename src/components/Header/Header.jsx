@@ -24,9 +24,7 @@ const Header = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
-  if (location.pathname === '/login') {
-    return null;
-  }
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -44,6 +42,10 @@ const Header = () => {
   }, []);
 
   const categories = ["Necklaces", "Earrings", "Bracelets", "Keychains", "Gifts"];
+
+  if (location.pathname === '/login') {
+    return null;
+  }
 
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''} ${!isHomePage ? 'inner-page-header' : ''}`}>
