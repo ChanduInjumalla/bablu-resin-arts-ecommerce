@@ -255,13 +255,13 @@
     left: -320px;
     width: 320px;
     max-width: 85%;
-    height: 100vh;
+    height: 100dvh;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem calc(2rem + env(safe-area-inset-bottom));
     transition: left var(--transition-elegant);
     z-index: 1005;
     overflow-y: auto;
@@ -277,7 +277,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background: rgba(0,0,0,0.4);
     z-index: 1004;
   }
@@ -294,7 +294,6 @@
     align-items: flex-start;
     gap: 1.5rem;
     width: 100%;
-    margin-bottom: auto; /* Pushes the auth section to the bottom if needed, or just let it sit */
   }
 
   .header-nav a {
@@ -306,7 +305,8 @@
 
   .mobile-auth-section {
     display: flex;
-    margin-top: 3rem;
+    margin-top: auto;
+    padding-top: 2rem;
     width: 100%;
     flex-direction: column;
   }
