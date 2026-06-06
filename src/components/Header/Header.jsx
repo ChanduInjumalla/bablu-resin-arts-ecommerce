@@ -24,6 +24,10 @@ const Header = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
+  if (location.pathname === '/login') {
+    return null;
+  }
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentAnnouncement((prev) => (prev + 1) % announcements.length);

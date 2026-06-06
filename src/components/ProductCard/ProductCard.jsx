@@ -1,13 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { Heart, ShoppingBag, Eye, Star } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ShopContext } from '../../context/ShopContext';
+import { AuthContext } from '../../context/AuthContext';
 import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { addToCart, toggleWishlist, isInWishlist } = useContext(ShopContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const isLiked = isInWishlist(product.id);
 
   return (
@@ -80,7 +83,14 @@ const ProductCard = ({ product }) => {
         
         <button 
           className="persistent-add-to-cart-btn"
-          onClick={(e) => { e.preventDefault(); addToCart(product); }}
+          onClick={(e) => { 
+            e.preventDefault(); 
+            if (!user) {
+              navigate('/login', { state: { from: location } });
+            } else {
+              addToCart(product); 
+            }
+          }}
           disabled={product.outOfStock}
           style={product.outOfStock ? { backgroundColor: '#ccc', cursor: 'not-allowed' } : {}}
         >

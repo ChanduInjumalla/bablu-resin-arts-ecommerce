@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
+import { AuthContext } from '../context/AuthContext';
 import { Heart, ShoppingBag, ShieldCheck, Truck, Star, ArrowLeft } from 'lucide-react';
 import ProductCard from '../components/ProductCard/ProductCard';
 import './ProductDetail.css';
@@ -9,8 +10,10 @@ const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { products, addToCart, toggleWishlist, isInWishlist, isProductsLoading } = useContext(ShopContext);
+  const { user } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -96,7 +99,13 @@ const ProductDetail = () => {
           <div className="product-detail-actions">
             <button 
               className="product-detail-btn"
-              onClick={() => addToCart(product)}
+              onClick={() => {
+                if (!user) {
+                  navigate('/login', { state: { from: location } });
+                } else {
+                  addToCart(product);
+                }
+              }}
               disabled={product.outOfStock}
             >
               <ShoppingBag size={20} />
