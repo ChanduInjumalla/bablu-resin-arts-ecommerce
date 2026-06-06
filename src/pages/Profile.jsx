@@ -88,21 +88,21 @@ const Profile = () => {
         </div>
         
         <div className="profile-main">
-          <div className="profile-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
+          <div className="profile-header">
+            <div className="profile-header-title">
               <h2>Personal Information</h2>
               <p>Manage your account details and preferences.</p>
             </div>
             {!isEditing ? (
-              <button onClick={() => setIsEditing(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: '4px', border: '1px solid var(--border-color)', background: 'white', cursor: 'pointer' }}>
+              <button className="edit-profile-btn" onClick={() => setIsEditing(true)}>
                 <Edit2 size={16} /> Edit Profile
               </button>
             ) : (
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <button onClick={() => setIsEditing(false)} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: '#f8f9fa', cursor: 'pointer' }}>
+              <div className="profile-edit-actions">
+                <button className="cancel-edit-btn" onClick={() => setIsEditing(false)}>
                   <X size={16} /> Cancel
                 </button>
-                <button onClick={handleSaveProfile} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: 'var(--brand-dark)', color: 'white', cursor: 'pointer' }}>
+                <button className="save-profile-btn" onClick={handleSaveProfile}>
                   <Check size={16} /> Save
                 </button>
               </div>

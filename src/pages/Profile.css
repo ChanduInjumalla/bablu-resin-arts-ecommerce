@@ -97,6 +97,15 @@
 
 .profile-header {
   margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.profile-header-title {
+  flex: 1;
 }
 
 .profile-header h2 {
@@ -108,6 +117,57 @@
 
 .profile-header p {
   color: var(--text-secondary);
+  margin: 0;
+}
+
+.edit-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background: white;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+  background-color: #f8f9fa;
+}
+
+.profile-edit-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cancel-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background: #f8f9fa;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+
+.save-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  background: var(--brand-dark);
+  color: white;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 500;
 }
 
 .profile-details {
@@ -162,6 +222,16 @@
 }
 
 @media (max-width: 600px) {
+  .profile-main {
+    padding: 1.5rem;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
   .admin-access-card {
     flex-direction: column;
     align-items: flex-start;

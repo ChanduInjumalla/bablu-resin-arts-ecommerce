@@ -72,13 +72,13 @@ const Header = () => {
 
         <nav className={`header-nav ${mobileMenuOpen ? 'open' : ''}`}>
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/shop">All Products</Link></li>
+            <li><Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link></li>
+            <li><Link to="/shop" onClick={() => setMobileMenuOpen(false)}>All Products</Link></li>
             {categories.map((cat) => (
-              <li key={cat}><Link to={`/category/${cat.toLowerCase()}`}>{cat}</Link></li>
+              <li key={cat}><Link to={`/category/${cat.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)}>{cat}</Link></li>
             ))}
-            <li><Link to="/#collections" className="nav-highlight">Collections</Link></li>
-            <li><Link to="/orders">Order History</Link></li>
+            <li><Link to="/#collections" className="nav-highlight" onClick={() => setMobileMenuOpen(false)}>Collections</Link></li>
+            <li><Link to="/orders" onClick={() => setMobileMenuOpen(false)}>Order History</Link></li>
           </ul>
         </nav>
 
