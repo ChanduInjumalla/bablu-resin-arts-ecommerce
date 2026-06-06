@@ -16,6 +16,10 @@ const Login = () => {
   const from = location.state?.from?.pathname || '/';
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (user) {
       if (user.role === 'admin') {
         navigate('/admin/dashboard', { replace: true });
