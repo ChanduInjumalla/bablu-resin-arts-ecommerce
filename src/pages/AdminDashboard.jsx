@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { ShopContext } from '../context/ShopContext';
 import { db } from '../firebase/config';
 import { collection, query, orderBy, getDocs, doc, writeBatch, updateDoc } from 'firebase/firestore';
-import { Trash2, Edit2, LogOut, Package, Plus, CheckCircle, XCircle, ShoppingCart, RefreshCw, Mail, Users } from 'lucide-react';
+import { Trash2, Edit2, LogOut, Package, Plus, CheckCircle, XCircle, ShoppingCart, RefreshCw, Mail, Users, Menu, X } from 'lucide-react';
 import defaultProducts from '../data/products.json';
 import './AdminDashboard.css';
 
@@ -25,6 +25,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState('list'); // 'list', 'add', 'orders', 'messages', 'subscribers'
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [filterCategory, setFilterCategory] = useState('All');
   const [editingProduct, setEditingProduct] = useState(null);
   
@@ -239,24 +240,37 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <div className="admin-sidebar">
+      {/* Mobile Header */}
+      <div className="admin-mobile-header">
+        <h2>Admin Panel</h2>
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <Menu size={24} />
+        </button>
+      </div>
+
+      {isMobileMenuOpen && <div className="admin-mobile-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>}
+
+      <div className={`admin-sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
         <div className="admin-brand">
           <h2>Admin Panel</h2>
+          <button className="admin-close-mobile" onClick={() => setIsMobileMenuOpen(false)}>
+            <X size={24} />
+          </button>
         </div>
         <ul className="admin-nav">
-          <li className={activeTab === 'list' ? 'active' : ''} onClick={() => setActiveTab('list')}>
+          <li className={activeTab === 'list' ? 'active' : ''} onClick={() => { setActiveTab('list'); setIsMobileMenuOpen(false); }}>
             <Package size={18} /> Manage Products
           </li>
-          <li className={activeTab === 'add' ? 'active' : ''} onClick={() => setActiveTab('add')}>
+          <li className={activeTab === 'add' ? 'active' : ''} onClick={() => { setActiveTab('add'); setIsMobileMenuOpen(false); }}>
             <Plus size={18} /> Add New Product
           </li>
-          <li className={activeTab === 'orders' ? 'active' : ''} onClick={() => setActiveTab('orders')}>
+          <li className={activeTab === 'orders' ? 'active' : ''} onClick={() => { setActiveTab('orders'); setIsMobileMenuOpen(false); }}>
             <ShoppingCart size={18} /> Orders
           </li>
-          <li className={activeTab === 'messages' ? 'active' : ''} onClick={() => setActiveTab('messages')}>
+          <li className={activeTab === 'messages' ? 'active' : ''} onClick={() => { setActiveTab('messages'); setIsMobileMenuOpen(false); }}>
             <Mail size={18} /> Messages
           </li>
-          <li className={activeTab === 'subscribers' ? 'active' : ''} onClick={() => setActiveTab('subscribers')}>
+          <li className={activeTab === 'subscribers' ? 'active' : ''} onClick={() => { setActiveTab('subscribers'); setIsMobileMenuOpen(false); }}>
             <Users size={18} /> Subscribers
           </li>
         </ul>
