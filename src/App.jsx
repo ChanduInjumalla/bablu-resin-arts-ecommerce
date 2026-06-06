@@ -35,45 +35,56 @@ const LoadingFallback = () => (
   </div>
 );
 
+import { useLocation } from 'react-router-dom';
+
+const MainContent = () => {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+
+  return (
+    <div className={`app ${isAdmin ? 'admin-mode' : 'shop-mode'}`}>
+      {!isAdmin && <Header />}
+      
+      <main>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/category/:categoryId" element={<CategoryPage />} />
+            <Route path="/price/:amount" element={<PricePage />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
+            <Route path="/legal/:type" element={<Legal />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/track" element={<TrackOrder />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+          </Routes>
+        </Suspense>
+      </main>
+      
+      {!isAdmin && <Footer />}
+      {!isAdmin && <WhatsAppButton />}
+      {!isAdmin && <CartDrawer />}
+    </div>
+  );
+};
+
 function App() {
   return (
     <AuthProvider>
       <ShopProvider>
         <Router>
-        <DynamicTitle />
-      <div className="app">
-        <Header />
-        
-        <main>
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/category/:categoryId" element={<CategoryPage />} />
-              <Route path="/price/:amount" element={<PricePage />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
-              <Route path="/legal/:type" element={<Legal />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/track" element={<TrackOrder />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-            </Routes>
-          </Suspense>
-        </main>
-        
-        <Footer />
-        <WhatsAppButton />
-        <CartDrawer />
-      </div>
-      </Router>
+          <DynamicTitle />
+          <MainContent />
+        </Router>
       </ShopProvider>
     </AuthProvider>
   );
