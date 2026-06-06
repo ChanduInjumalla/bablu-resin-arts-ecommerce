@@ -65,7 +65,8 @@
     width: 100%;
   }
   
-  .carousel-header .section-header {
+  .carousel-header .section-header,
+  .carousel-header .section-title {
     text-align: center;
   }
   

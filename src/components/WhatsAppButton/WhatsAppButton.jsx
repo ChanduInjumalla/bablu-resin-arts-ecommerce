@@ -7,7 +7,7 @@ const WhatsAppButton = () => {
   const { isCartOpen } = useContext(ShopContext);
   const location = useLocation();
   
-  if (location.pathname === '/checkout' || location.pathname === '/login') {
+  if (location.pathname === '/checkout' || location.pathname === '/login' || isCartOpen) {
     return null;
   }
 

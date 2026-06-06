@@ -127,7 +127,7 @@ const ProductDetail = () => {
       {relatedProducts.length > 0 && (
         <div className="related-products">
           <h2>You May Also Like</h2>
-          <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '2rem' }}>
+          <div className="product-grid">
             {relatedProducts.map(relProduct => (
               <ProductCard key={relProduct.id} product={relProduct} />
             ))}

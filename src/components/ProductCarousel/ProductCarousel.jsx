@@ -18,9 +18,9 @@ const ProductCarousel = ({ title, subtitle, products }) => {
     <section className="section product-carousel-section">
       <div className="container">
         <div className="carousel-header">
-          <div className="section-header" style={{ textAlign: 'left' }}>
+          <div className="section-header">
             <span className="section-eyebrow">{subtitle || title}</span>
-            <h2 className="section-title" style={{ textAlign: 'left', margin: 0 }}>{title}</h2>
+            <h2 className="section-title" style={{ margin: 0 }}>{title}</h2>
           </div>
           <div className="carousel-controls">
             <button className="carousel-btn" onClick={() => scroll('left')} aria-label="Scroll left">
