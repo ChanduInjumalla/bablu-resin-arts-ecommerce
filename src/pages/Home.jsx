@@ -3,8 +3,6 @@ import Hero from '../components/Hero/Hero';
 import FeaturedCategories from '../components/FeaturedCategories/FeaturedCategories';
 import ProductCarousel from '../components/ProductCarousel/ProductCarousel';
 import ShopByAmount from '../components/ShopByAmount/ShopByAmount';
-import Features from '../components/Features/Features';
-import Reviews from '../components/Reviews/Reviews';
 import Gallery from '../components/Gallery/Gallery';
 import { ShopContext } from '../context/ShopContext';
 
@@ -35,13 +33,10 @@ const Home = () => {
         <ProductCarousel title="Trending Now" subtitle="Most Loved" products={trending} />
       </div>
       
-      <Features />
-      
       <div id="best-sellers">
         <ProductCarousel title="Best Sellers" subtitle="Customer Favorites" products={bestSellers} />
       </div>
       
-      <Reviews />
       <Gallery />
     </div>
   );
