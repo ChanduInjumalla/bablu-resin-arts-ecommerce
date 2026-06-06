@@ -155,7 +155,7 @@
   text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .login-container {
     padding: 2rem 1.5rem;
   }

@@ -57,7 +57,7 @@
   flex: 0 0 auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .carousel-header {
     flex-direction: column;
     align-items: center;

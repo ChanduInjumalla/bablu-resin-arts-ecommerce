@@ -166,7 +166,7 @@
   color: var(--brand-dark);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .product-detail-container {
     flex-direction: column;
     padding: 1rem;

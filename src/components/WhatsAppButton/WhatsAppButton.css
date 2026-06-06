@@ -33,7 +33,7 @@
   z-index: 1002; /* Ensure it stays above the cart overlay */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .whatsapp-float {
     bottom: 20px;
     right: 20px;

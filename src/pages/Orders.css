@@ -248,7 +248,7 @@
   transform: translateX(3px);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .track-guest-card {
     flex-direction: column;
     text-align: center;

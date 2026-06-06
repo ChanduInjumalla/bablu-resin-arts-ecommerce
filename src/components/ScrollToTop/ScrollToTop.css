@@ -27,7 +27,7 @@
   transform: translateY(-3px);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .scroll-btn {
     width: 40px;
     height: 40px;

@@ -230,7 +230,7 @@
   color: #888;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .track-input-wrapper {
     flex-direction: column;
   }

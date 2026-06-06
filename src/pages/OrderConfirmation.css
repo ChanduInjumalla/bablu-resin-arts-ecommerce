@@ -283,7 +283,7 @@
   to { transform: scale(1); opacity: 1; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .confirmation-grid {
     grid-template-columns: 1fr;
   }

@@ -89,7 +89,7 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .mobile-actions-bar {
     display: flex;
     gap: 8px;

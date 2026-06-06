@@ -54,7 +54,7 @@
   opacity: 1;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .gallery-grid {
     grid-template-columns: repeat(3, 1fr);
   }

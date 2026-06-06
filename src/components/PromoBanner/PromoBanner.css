@@ -130,7 +130,7 @@
   border-color: var(--brand-primary);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .promo-inner {
     flex-direction: column;
     gap: 3rem;

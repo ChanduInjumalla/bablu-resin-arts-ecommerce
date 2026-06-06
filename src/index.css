@@ -266,7 +266,7 @@ html {
   flex: 1;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .layout-sidebar-container {
     flex-direction: column;
     gap: 0;
@@ -278,7 +278,7 @@ html {
 .bg-secondary { background-color: var(--bg-secondary); }
 .bg-dark { background-color: var(--bg-dark); color: white; }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   :root {
     --spacing-section: 2.5rem;
   }

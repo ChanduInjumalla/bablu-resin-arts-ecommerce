@@ -10,7 +10,7 @@
   gap: 2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .profile-container {
     grid-template-columns: 1fr;
   }
