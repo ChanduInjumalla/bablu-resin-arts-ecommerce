@@ -222,7 +222,7 @@ const Checkout = () => {
       // 2. Create Order on our Backend
       let orderDataBackend = { success: false };
       try {
-        const orderResponse = await fetch('http://localhost:5001/create-order', {
+        const orderResponse = await fetch('/api/create-order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount: totalAmount, currency: 'INR' })
@@ -277,7 +277,7 @@ const Checkout = () => {
         handler: async function (response) {
           try {
             // 4. Verify Payment on Backend
-            const verifyResponse = await fetch('http://localhost:5001/verify-payment', {
+            const verifyResponse = await fetch('/api/verify-payment', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
