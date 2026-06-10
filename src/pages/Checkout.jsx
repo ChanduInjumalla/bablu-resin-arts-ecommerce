@@ -267,7 +267,7 @@ const Checkout = () => {
 
       // 3. Initialize Razorpay Options
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'YOUR_RAZORPAY_KEY_ID', // Replace in .env
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_SztVYYMMoX1JkG', // Replace in .env
         amount: orderDataBackend.order.amount,
         currency: 'INR',
         name: 'Bablu Resin Arts',
