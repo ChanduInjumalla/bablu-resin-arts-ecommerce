@@ -12,8 +12,11 @@
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: 80px; /* Offset for the global header */
+  height: calc(100vh - 80px); /* Height of viewport minus header */
+  overflow-y: auto; /* Allow scrolling inside sidebar if needed */
+  align-self: flex-start; /* CRITICAL: Prevents stretching so sticky works */
+  z-index: 100;
 }
 
 /* Hide mobile elements on desktop */
