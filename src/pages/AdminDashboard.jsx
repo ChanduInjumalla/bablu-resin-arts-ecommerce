@@ -196,10 +196,16 @@ const AdminDashboard = () => {
       const productsToSeed = defaultProducts;
       const addBatch = writeBatch(db);
       
+      let currentNumber = 1;
       productsToSeed.forEach((prod) => {
         const docRef = doc(productsRef);
-        addBatch.set(docRef, { ...prod, id: docRef.id });
+        addBatch.set(docRef, { ...prod, id: docRef.id, productNumber: currentNumber });
+        currentNumber++;
       });
+      
+      // 3. Reset the metadata counter
+      const counterRef = doc(db, 'metadata', 'productCounter');
+      addBatch.set(counterRef, { count: currentNumber - 1 });
       
       await addBatch.commit();
       alert("Successfully reset database to exactly 181 products! Please refresh the page.");
