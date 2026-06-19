@@ -11,7 +11,7 @@
 
 ---
 
-*A fully functional, production-grade e-commerce website built for a real small business — **Bablu Resin Arts** — specializing in handcrafted resin jewelry, keychains, hair accessories, and personalized gifts.*
+*A fully functional, production-grade e-commerce website built for a real small business  **Bablu Resin Arts**  specializing in handcrafted resin jewelry, keychains, hair accessories, and personalized gifts.*
 
 </div>
 
