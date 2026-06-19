@@ -21,7 +21,7 @@
 
 **Bablu Resin Arts** is a real Indian small business that creates beautiful handmade resin products. This platform was built to give them a premium online storefront with a complete shopping experience — from product browsing to secure checkout with Razorpay payments.
 
-> 🛒 **181+ Products** · 🎨 **8 Categories** · 💳 **Razorpay Payments** · 📦 **Order Tracking** · 👑 **Admin Dashboard**
+> 🛒 **Hundreds of Products** · 🎨 **8 Categories** · 💳 **Razorpay Payments** · 📦 **Order Tracking** · 👑 **Admin Dashboard**
 
 ---
 
@@ -45,7 +45,7 @@
 
 ### 🛍️ Customer Experience
 - **Beautiful Storefront** — Luxury-inspired UI with warm gold tones, elegant typography, and smooth animations
-- **Product Catalog** — 181+ products across 8 categories with filtering and search
+- **Product Catalog** — Hundreds of products across 8 categories with filtering and search
 - **Product Detail Pages** — High-res image galleries, pricing, stock status, and related products
 - **Smart Cart** — Slide-out cart drawer with quantity controls and real-time price updates
 - **Wishlist** — Save favorite products with persistent local storage
@@ -65,7 +65,7 @@
 - **Order Management** — View all orders, update status (Paid → Processing → Shipped → Delivered)
 - **Customer Messages** — Read contact form submissions from customers
 - **Newsletter Subscribers** — View all email subscribers
-- **Database Seeding** — One-click database reset with 181 default products
+- **Database Seeding** — One-click database reset with default product catalog
 - **Inline Price Editing** — Edit product prices directly from the table
 
 ### 🔐 Authentication
@@ -195,13 +195,13 @@ The app will open at `http://localhost:5173`
 2. Enable **Firestore Database** (Start in test mode)
 3. Enable **Authentication** → Email/Password + Google Sign-In
 4. Copy your config values into the `.env` file
-5. On first load, the app will automatically seed 181 products into your Firestore
+5. On first load, the app will automatically seed the default product catalog into your Firestore
 
 ### Firestore Collections
 
 | Collection | Purpose |
 |---|---|
-| `products` | Product catalog (181+ items) |
+| `products` | Product catalog (auto-seeded on first load) |
 | `orders` | Customer orders with 6-digit IDs |
 | `messages` | Contact form submissions |
 | `subscribers` | Newsletter email subscribers |
