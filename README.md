@@ -1,8 +1,8 @@
 <div align="center">
 
-# ✨ Bablu Resin Arts — Premium E-Commerce Platform
+# Bablu Resin Arts - Premium E-Commerce Platform
 
-### Handcrafted Resin Jewelry & Art — Made with Love 💛
+### Handcrafted Resin Jewelry & Art 
 
 [![Live Website](https://img.shields.io/badge/🌐_Live_Website-babluresinarts.in-c4985a?style=for-the-badge&labelColor=1b1b1b)](https://www.babluresinarts.in)
 [![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel)](https://vercel.com)
@@ -270,7 +270,7 @@ This project is built for **Bablu Resin Arts** — a real small business. All pr
 
 <div align="center">
 
-**Made with ❤️ for Bablu Resin Arts**
+**Made with 🫶🏻 for Bablu Resin Arts**
 
 *Handcrafted with code, just like our jewelry is handcrafted with resin* ✨
 
