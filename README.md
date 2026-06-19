@@ -1,4 +1,4 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 # ✨ Bablu Resin Arts — Premium E-Commerce Platform
 
@@ -275,4 +275,3 @@ This project is built for **Bablu Resin Arts** — a real small business. All pr
 *Handcrafted with code, just like our jewelry is handcrafted with resin* ✨
 
 </div>
-]]>
