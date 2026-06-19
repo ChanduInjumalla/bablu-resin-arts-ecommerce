@@ -176,7 +176,7 @@ const Profile = () => {
                   <div key={order.id} style={{ border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.5rem', background: 'white' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '1rem' }}>
                       <div>
-                        <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>Order #{order.id.slice(0, 8).toUpperCase()}</div>
+                        <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>Order #{order.id}</div>
                         <div style={{ fontSize: '0.85rem', color: '#666', marginTop: '0.25rem' }}>
                           Placed on: {order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 'Recently'}
                         </div>

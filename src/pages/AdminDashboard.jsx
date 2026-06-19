@@ -259,7 +259,59 @@ const AdminDashboard = () => {
       window.location.reload();
     } catch (error) {
       console.error(error);
-      alert("Failed to initialize numbers: " + error.message);
+      alert("Failed to initialize product numbers: " + error.message);
+    }
+  };
+
+  const handleInitializeOrders = async () => {
+    try {
+      if (!db) return alert("Firebase not configured");
+      const confirmInit = window.confirm("This will assign 6-digit sequential IDs (#000001, etc.) to existing orders. Continue?");
+      if (!confirmInit) return;
+
+      const ordersRef = collection(db, 'orders');
+      const querySnapshot = await getDocs(query(ordersRef, orderBy('createdAt', 'asc')));
+      
+      const allOrders = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ref: doc.ref,
+        ...doc.data()
+      }));
+
+      let currentNumber = 1;
+      const initBatch = writeBatch(db);
+      
+      allOrders.forEach(order => {
+        // Skip orders that already look like 6 digit strings
+        if (/^\d{6}$/.test(order.id)) {
+          // It's already migrated! But we should still bump currentNumber if needed
+          const num = parseInt(order.id, 10);
+          if (num >= currentNumber) currentNumber = num + 1;
+          return;
+        }
+
+        const paddedId = String(currentNumber).padStart(6, '0');
+        
+        // Delete old
+        initBatch.delete(order.ref);
+        
+        // Create new
+        const newDocRef = doc(db, 'orders', paddedId);
+        const { ref, ...cleanOrder } = order;
+        initBatch.set(newDocRef, { ...cleanOrder, id: paddedId });
+        
+        currentNumber++;
+      });
+      
+      const counterRef = doc(db, 'metadata', 'orderCounter');
+      initBatch.set(counterRef, { count: currentNumber - 1 });
+
+      await initBatch.commit();
+      alert(`Successfully migrated orders! Please refresh the page.`);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to initialize order numbers: " + error.message);
     }
   };
 
@@ -365,6 +417,17 @@ const AdminDashboard = () => {
               }}
             >
               <RefreshCw size={16} /> Seed Database
+            </button>
+            <button 
+              onClick={handleInitializeOrders}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '0.5rem', 
+                background: '#f3e5f5', color: '#8e24aa', border: '1px solid #e1bee7', 
+                padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer',
+                fontWeight: '600', fontSize: '0.85rem'
+              }}
+            >
+              <CheckCircle size={16} /> Init Orders
             </button>
           </div>
         </div>
@@ -550,7 +613,7 @@ const AdminDashboard = () => {
                     {orders.map(order => (
                       <tr key={order.id}>
                         <td style={{ fontWeight: '600', color: 'var(--brand-dark)' }}>
-                          {order.id.slice(0, 8).toUpperCase()}...
+                          #{order.id}
                         </td>
                         <td>
                           {order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 'Just now'}

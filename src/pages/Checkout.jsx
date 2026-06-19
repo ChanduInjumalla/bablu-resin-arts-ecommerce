@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { AuthContext } from '../context/AuthContext';
 import { db } from '../firebase/config';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, runTransaction, doc, setDoc } from 'firebase/firestore';
 import { ChevronDown, ChevronUp, Search, Shield, Lock, Truck, MapPin, ChevronRight, ChevronLeft, Tag, X, Check, AlertCircle, ShoppingBag, Minus, Plus, Trash2, Navigation, Loader2 } from 'lucide-react';
 import './Checkout.css';
 
@@ -245,6 +245,24 @@ const Checkout = () => {
             const subtotal = calculateSubtotal();
             const discount = calculateDiscount();
             const tax = calculateTax();
+            
+            // 1. Generate sequential 6-digit order ID using transaction
+            const counterRef = doc(db, 'metadata', 'orderCounter');
+            const newOrderNumber = await runTransaction(db, async (transaction) => {
+              const counterDoc = await transaction.get(counterRef);
+              let count = 0;
+              if (counterDoc.exists()) count = counterDoc.data().count;
+              const newCount = count + 1;
+              transaction.update(counterRef, { count: newCount }, { merge: true });
+              return newCount;
+            }).catch(async (e) => {
+              // Fallback if metadata doesn't exist yet
+              await setDoc(counterRef, { count: 1 });
+              return 1;
+            });
+
+            const paddedOrderId = String(newOrderNumber).padStart(6, '0');
+            
             const dbOrderData = {
               customerInfo: { email: formData.email, firstName: formData.firstName, lastName: formData.lastName, phone: formData.phone },
               shippingAddress: { address: formData.address, apartment: formData.apartment, city: formData.city, state: formData.state, pincode: formData.pincode, country: formData.country },
@@ -256,9 +274,12 @@ const Checkout = () => {
               createdAt: serverTimestamp(),
               userId: user ? user.uid || user.email : 'guest'
             };
-            const docRef = await addDoc(collection(db, 'orders'), dbOrderData);
+            
+            const docRef = doc(db, 'orders', paddedOrderId);
+            await setDoc(docRef, dbOrderData);
+            
             clearCart();
-            navigate(`/order-confirmation/${docRef.id}`);
+            navigate(`/order-confirmation/${paddedOrderId}`);
           }
         }
         setIsProcessing(false);
@@ -297,6 +318,22 @@ const Checkout = () => {
                 const subtotal = calculateSubtotal();
                 const discount = calculateDiscount();
                 const tax = calculateTax();
+
+                // 1. Generate sequential 6-digit order ID using transaction
+                const counterRef = doc(db, 'metadata', 'orderCounter');
+                const newOrderNumber = await runTransaction(db, async (transaction) => {
+                  const counterDoc = await transaction.get(counterRef);
+                  let count = 0;
+                  if (counterDoc.exists()) count = counterDoc.data().count;
+                  const newCount = count + 1;
+                  transaction.update(counterRef, { count: newCount }, { merge: true });
+                  return newCount;
+                }).catch(async (e) => {
+                  await setDoc(counterRef, { count: 1 });
+                  return 1;
+                });
+
+                const paddedOrderId = String(newOrderNumber).padStart(6, '0');
 
                 const dbOrderData = {
                   customerInfo: {
@@ -338,12 +375,14 @@ const Checkout = () => {
                   userId: user ? user.uid || user.email : 'guest'
                 };
 
-                await addDoc(collection(db, 'orders'), dbOrderData);
+                const docRef = doc(db, 'orders', paddedOrderId);
+                await setDoc(docRef, dbOrderData);
+                
+                // Navigate to confirmation page!
+                alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+                clearCart();
+                navigate(`/order-confirmation/${paddedOrderId}`);
               }
-
-              alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-              clearCart();
-              navigate('/');
             } else {
               alert("Payment verification failed. Please contact support.");
             }

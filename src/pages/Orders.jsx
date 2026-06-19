@@ -89,7 +89,7 @@ const Orders = () => {
               <div key={order.id} className="order-card">
                 <div className="order-card-header">
                   <div className="order-id-date">
-                    <h3>Order #{order.id.slice(0, 8).toUpperCase()}</h3>
+                    <h3>Order #{order.id}</h3>
                     <span className="order-date">
                       {order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 'Recently'}
                     </span>
