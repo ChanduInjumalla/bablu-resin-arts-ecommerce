@@ -198,8 +198,8 @@ const AdminDashboard = () => {
       
       let currentNumber = 1;
       productsToSeed.forEach((prod) => {
-        const docRef = doc(productsRef);
-        addBatch.set(docRef, { ...prod, id: docRef.id, productNumber: currentNumber });
+        const docRef = doc(productsRef, String(currentNumber));
+        addBatch.set(docRef, { ...prod, id: String(currentNumber), productNumber: currentNumber });
         currentNumber++;
       });
       
@@ -240,7 +240,13 @@ const AdminDashboard = () => {
       const initBatch = writeBatch(db);
       
       allProducts.forEach(prod => {
-        initBatch.update(prod.ref, { productNumber: currentNumber });
+        // Delete the old document with the random ID
+        initBatch.delete(prod.ref);
+        // Create the new document with the sequential ID
+        const newDocRef = doc(db, 'products', String(currentNumber));
+        // Remove the old 'ref' before saving, keep the rest
+        const { ref, ...cleanProd } = prod;
+        initBatch.set(newDocRef, { ...cleanProd, id: String(currentNumber), productNumber: currentNumber });
         currentNumber++;
       });
       

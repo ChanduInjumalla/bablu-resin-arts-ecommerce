@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import defaultProducts from '../data/products.json';
 import { db } from '../firebase/config';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch, runTransaction } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch, runTransaction, setDoc } from 'firebase/firestore';
 
 export const ShopContext = createContext();
 
@@ -86,11 +86,14 @@ export const ShopProvider = ({ children }) => {
       // Assign the generated sequential number to the product
       const productWithNumber = {
         ...newProduct,
-        productNumber: newProductNumber
+        productNumber: newProductNumber,
+        id: String(newProductNumber) // Ensure the ID matches the Firebase Document ID
       };
 
-      const docRef = await addDoc(collection(db, 'products'), productWithNumber);
-      setProducts(prev => [{ ...productWithNumber, id: docRef.id }, ...prev]);
+      const docRef = doc(db, 'products', String(newProductNumber));
+      await setDoc(docRef, productWithNumber);
+      
+      setProducts(prev => [{ ...productWithNumber }, ...prev]);
     } catch (error) {
       console.error("Error adding product:", error);
       alert("Failed to add product to database. Ensure Firebase rules allow writing to 'metadata'.");
