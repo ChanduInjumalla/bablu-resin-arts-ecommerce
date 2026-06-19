@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import defaultProducts from '../data/products.json';
 import { db } from '../firebase/config';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch, runTransaction } from 'firebase/firestore';
 
 export const ShopContext = createContext();
 
@@ -64,11 +64,36 @@ export const ShopProvider = ({ children }) => {
   const addProduct = async (newProduct) => {
     try {
       if (!db) return;
-      const docRef = await addDoc(collection(db, 'products'), newProduct);
-      setProducts(prev => [{ ...newProduct, id: docRef.id }, ...prev]);
+      
+      const counterRef = doc(db, 'metadata', 'productCounter');
+      
+      const newProductNumber = await runTransaction(db, async (transaction) => {
+        const counterDoc = await transaction.get(counterRef);
+        let count = 0;
+        
+        if (!counterDoc.exists()) {
+          // If this is the very first time, we start at 0
+          transaction.set(counterRef, { count: 0 });
+        } else {
+          count = counterDoc.data().count;
+        }
+        
+        const newCount = count + 1;
+        transaction.update(counterRef, { count: newCount });
+        return newCount;
+      });
+
+      // Assign the generated sequential number to the product
+      const productWithNumber = {
+        ...newProduct,
+        productNumber: newProductNumber
+      };
+
+      const docRef = await addDoc(collection(db, 'products'), productWithNumber);
+      setProducts(prev => [{ ...productWithNumber, id: docRef.id }, ...prev]);
     } catch (error) {
       console.error("Error adding product:", error);
-      alert("Failed to add product to database");
+      alert("Failed to add product to database. Ensure Firebase rules allow writing to 'metadata'.");
     }
   };
 

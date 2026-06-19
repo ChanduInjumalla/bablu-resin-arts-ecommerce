@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { ShopContext } from '../context/ShopContext';
 import { db } from '../firebase/config';
-import { collection, query, orderBy, getDocs, doc, writeBatch, updateDoc } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, doc, writeBatch, updateDoc, setDoc } from 'firebase/firestore';
 import { Trash2, Edit2, LogOut, Package, Plus, CheckCircle, XCircle, ShoppingCart, RefreshCw, Mail, Users, Menu, X } from 'lucide-react';
 import defaultProducts from '../data/products.json';
 import './AdminDashboard.css';
@@ -210,6 +210,47 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleInitializeNumbers = async () => {
+    try {
+      if (!db) return alert("Firebase not configured");
+      const confirmInit = window.confirm("This will securely assign sequential numbers (#1, #2, etc.) to all your existing products based on when they were added. It will only run on products that don't have a number yet. Continue?");
+      if (!confirmInit) return;
+
+      // 1. Fetch all products
+      const productsRef = collection(db, 'products');
+      const querySnapshot = await getDocs(productsRef);
+      
+      const allProducts = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ref: doc.ref,
+        ...doc.data()
+      }));
+
+      // Sort existing products by their creation order (or default to name if no date)
+      allProducts.sort((a, b) => a.name.localeCompare(b.name));
+
+      // 2. Assign numbers starting from 1
+      let currentNumber = 1;
+      const initBatch = writeBatch(db);
+      
+      allProducts.forEach(prod => {
+        initBatch.update(prod.ref, { productNumber: currentNumber });
+        currentNumber++;
+      });
+      
+      // 3. Set the metadata counter
+      const counterRef = doc(db, 'metadata', 'productCounter');
+      initBatch.set(counterRef, { count: currentNumber - 1 });
+
+      await initBatch.commit();
+      alert(`Successfully assigned numbers up to #${currentNumber - 1}! Please refresh the page.`);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to initialize numbers: " + error.message);
+    }
+  };
+
   const openEditModal = (product) => {
     setEditingProduct({ ...product });
   };
@@ -291,6 +332,17 @@ const AdminDashboard = () => {
               <span>Out of Stock</span>
               <strong>{products.filter(p => p.outOfStock).length}</strong>
             </div>
+            <button 
+              onClick={handleInitializeNumbers}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '0.5rem', 
+                background: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', 
+                padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer',
+                fontWeight: '600', fontSize: '0.85rem'
+              }}
+            >
+              <CheckCircle size={16} /> Initialize Numbers
+            </button>
             <button 
               onClick={handleForceSeed}
               style={{
@@ -419,7 +471,9 @@ const AdminDashboard = () => {
                     .filter(p => filterCategory === 'All' || p.category === filterCategory)
                     .map((product) => (
                     <tr key={product.id}>
-                      <td style={{ fontWeight: '600', color: 'var(--brand-dark)' }}>{product.id}</td>
+                      <td style={{ fontWeight: '600', color: 'var(--brand-dark)' }}>
+                        {product.productNumber ? `#${product.productNumber}` : product.id}
+                      </td>
                       <td>
                         <img src={product.image.split(',')[0]} alt={product.name} className="admin-table-img" />
                       </td>
